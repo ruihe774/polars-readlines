@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  build-plrl:
+    name: Build polars-readlines
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -mpip install maturin
+      - name: Build sdist
+        run: maturin sdist --out dist
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          args: --release --out dist
+          manylinux: manylinux2014
+      - name: Upload dist
+        uses: actions/upload-artifact@v4
+        with:
+          path: dist/*

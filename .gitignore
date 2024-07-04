@@ -1,0 +1,10 @@
+/.idea
+/.vscode
+/target
+/build
+/dist
+/.venv
+__pycache__
+*.pyc
+*.so
+*.dll
