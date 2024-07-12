@@ -13,8 +13,7 @@ classifiers = [
 dynamic = ["version"]
 requires-python = ">= 3.8"
 dependencies = [
-    "polars ~= 1.0",
-    "pyarrow ~= 16.0",
+    "polars >= 0.20.7"
 ]
 
 [[project.authors]]
