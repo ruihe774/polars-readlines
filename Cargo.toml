@@ -17,6 +17,9 @@ polars-arrow = { version = "0.41.0", features = ["arrow_rs"] }
 pyo3 = { version = "0.21.0", features = ["extension-module", "abi3-py38"] }
 pyo3-polars = "0.15.0"
 
+[target.'cfg(target_os="windows")'.dependencies]
+pyo3 = { version = "0.21.0", features = ["extension-module", "abi3-py38", "generate-import-lib"] }
+
 [profile.release]
 opt-level = "s"
 strip = "symbols"
