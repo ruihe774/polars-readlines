@@ -29,8 +29,13 @@ fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
             }
             break;
         };
-        let len = memchr(b'\n', slice).unwrap_or(slice.len());
-        let line = &slice[..len];
+        let orig_len = memchr(b'\n', slice).unwrap_or(slice.len());
+        let line = &slice[..orig_len];
+        let len = orig_len
+            .checked_sub(1)
+            .filter(|&pos| line[pos] == b'\r')
+            .unwrap_or(orig_len);
+        let line = &line[..len];
         total_len += len;
         assert!(len < u32::MAX as usize, "line too long");
         let start = last - start_offset;
@@ -50,7 +55,7 @@ fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
             payload[12..16].copy_from_slice(&(start as u32).to_le_bytes());
         }
         views.push(View::from_le_bytes(payload));
-        last = last + len + 1;
+        last = last + orig_len + 1;
     }
     let mmap = Arc::new(mmap);
     let buffers: Vec<_> = buffers
