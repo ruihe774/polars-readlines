@@ -7,5 +7,5 @@ __all__ = ("read_lines",)
 __version__ = "0.1.0"
 
 
-def read_lines(path: os.PathLike) -> pl.DataFrame:
+def read_lines(path: os.PathLike | str | bytes) -> pl.DataFrame:
     return _read_lines(os.fsdecode(path))
