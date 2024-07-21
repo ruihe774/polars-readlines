@@ -79,10 +79,8 @@ fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
             mmap.len(),
         )
     };
-    let array = ChunkedArray::<StringType>::from(array);
-    let mut series = Series::from(array);
-    series.rename("lines");
-    let frame = DataFrame::new(vec![series]).unwrap();
+    let array = StringChunked::with_chunk("lines", array);
+    let frame = DataFrame::new(vec![array]).unwrap();
     Ok(frame)
 }
 
