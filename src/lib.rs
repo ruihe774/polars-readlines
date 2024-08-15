@@ -11,6 +11,10 @@ use polars_arrow::buffer::Buffer;
 use polars_arrow::types::NativeType;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
+use pyo3_polars::PolarsAllocator;
+
+#[global_allocator]
+static ALLOC: PolarsAllocator = PolarsAllocator::new();
 
 fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
     let file = File::open(path)?;
