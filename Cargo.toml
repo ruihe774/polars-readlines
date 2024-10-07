@@ -1,8 +1,11 @@
 [package]
 name = "polars-readlines"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
-publish = false
+license = "BSL-1.0"
+authors = ["Misaki Kasumi <misakikasumi@outlook.com>"]
+repository = "https://github.com/ruihe774/polars-readlines"
+description = "A util for fast reading lines of files into Polars"
 
 [dependencies]
 arrow-buffer = "52.0"
