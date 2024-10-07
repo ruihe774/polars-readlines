@@ -6,7 +6,7 @@ build-backend = "maturin"
 name = "polars-readlines"
 description = "A util for fast reading lines of files into Polars"
 classifiers = [
-    "License :: OSI Approved :: Zero-Clause BSD (0BSD)",
+    "License :: OSI Approved :: Boost Software License 1.0 (BSL-1.0)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Rust",
 ]
