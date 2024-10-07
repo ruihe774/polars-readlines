@@ -1,3 +1,6 @@
+//! A util for fast reading lines of files into Polars.
+//! It uses memory mapping and SIMD.
+
 use std::fs::File;
 use std::io;
 use std::path::Path;
@@ -9,14 +12,20 @@ use polars::prelude::*;
 use polars_arrow::array::{BinaryViewArrayGeneric, View};
 use polars_arrow::buffer::Buffer;
 use polars_arrow::types::NativeType;
+
+#[cfg(feature = "python")]
 use pyo3::prelude::*;
+#[cfg(feature = "python")]
 use pyo3_polars::PyDataFrame;
+#[cfg(feature = "python")]
 use pyo3_polars::PolarsAllocator;
 
+#[cfg(feature = "python")]
 #[global_allocator]
 static ALLOC: PolarsAllocator = PolarsAllocator::new();
 
-fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
+/// Read the file at `path` into a [`DataFrame`].
+pub fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
     let file = File::open(path)?;
     let mmap = unsafe { Mmap::map(&file) }?;
     let _ = file;
@@ -88,6 +97,7 @@ fn read_lines(path: impl AsRef<Path>) -> io::Result<DataFrame> {
     Ok(frame)
 }
 
+#[cfg(feature = "python")]
 #[pymodule]
 #[pyo3(name = "_polars_readlines")]
 fn polars_readlines(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {

@@ -22,6 +22,7 @@ email = "misakikasumi@outlook.com"
 
 [tool.maturin]
 module-name = "polars_readlines._polars_readlines"
+manifest-path = "py/Cargo.toml"
 
 [project.urls]
 Repository = "https://github.com/ruihe774/polars-readlines.git"

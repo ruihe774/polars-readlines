@@ -4,6 +4,10 @@ version = "0.2.0"
 edition = "2021"
 publish = false
 
+[lib]
+name = "_polars_readlines"
+crate-type = ["cdylib"]
+
 [dependencies]
 arrow-buffer = "52.0"
 memchr = "2.7"
@@ -15,3 +19,10 @@ pyo3-polars = { version = "0.16.0", optional = true }
 
 [features]
 python = ["pyo3", "pyo3-polars"]
+default = ["python"]
+
+[profile.release]
+opt-level = "s"
+strip = "symbols"
+lto = "fat"
+panic = "abort"
