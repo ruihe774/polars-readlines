@@ -9,7 +9,7 @@ name = "_polars_readlines"
 crate-type = ["cdylib"]
 
 [dependencies]
-arrow-buffer = "52.0"
+arrow-buffer = ">=52"
 memchr = "2.7"
 memmap2 = "0.9.0"
 polars = { version = "0.42.0", default-features = false }
